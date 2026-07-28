@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Resume History</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f4f7fc;
+}
+
+/* Navbar */
+
+.navbar{
+    background:#2563eb;
+    color:white;
+    padding:20px 50px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+}
+
+.nav-links a{
+    color:white;
+    text-decoration:none;
+    margin-left:25px;
+    font-size:18px;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+    text-decoration:underline;
+}
+
+/* Container */
+
+.container{
+    max-width:1200px;
+    margin:40px auto;
+}
+
+.page-title{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:30px;
+}
+
+/* Table */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
+
+th{
+    background:#2563eb;
+    color:white;
+    padding:15px;
+}
+
+td{
+    padding:15px;
+    border-bottom:1px solid #ddd;
+}
+
+tr:hover{
+    background:#f1f5f9;
+}
+
+.skills{
+    color:#2563eb;
+    font-weight:500;
+}
+
+.score{
+    color:green;
+    font-weight:bold;
+}
+
+.view-btn{
+    padding:10px 18px;
+    border:none;
+    background:#2563eb;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.view-btn:hover{
+    background:#1d4ed8;
+}
+
+/* Modal */
+
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.6);
+}
+
+.modal-content{
+    background:white;
+    width:80%;
+    max-width:900px;
+    margin:50px auto;
+    padding:25px;
+    border-radius:15px;
+    max-height:80vh;
+    overflow:auto;
+}
+
+.close{
+    float:right;
+    font-size:30px;
+    cursor:pointer;
+    color:red;
+}
+
+pre{
+    white-space:pre-wrap;
+    word-wrap:break-word;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+
+<div class="logo">
+    🚀 AI Resume Analyzer
+</div>
+
+<div class="nav-links">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="history.html">History</a>
+    <a href="profile.html">Profile</a>
+    <a href="/logout">Logout</a>
+</div>
+
+
+</div>
+
+<div class="container">
+
+
+<h1 class="page-title">
+    📄 Resume Analysis History
+</h1>
+
+<table id="resumeTable">
+
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Skills</th>
+        <th>ATS Score</th>
+        <th>View Resume</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    </tbody>
+
+</table>
+
+
+</div>
+
+<div class="modal" id="resumeModal">
+
+
+<div class="modal-content">
+
+    <span class="close" onclick="closeModal()">
+        &times;
+    </span>
+
+    <h2>Resume Content</h2>
+
+    <hr><br>
+
+    <pre id="resumeContent"></pre>
+
+</div>
+
+
+</div>
+
+<script>
+
+fetch(`${window.location.hostname.includes('vercel.app') ? '/api' : ''}/resumes`)
+.then(response => response.json())
+.then(data => {
+
+    let tbody =
+    document.querySelector("#resumeTable tbody");
+
+    data.forEach(resume => {
+
+        let row =
+        document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${resume.id}</td>
+            <td class="skills">${resume.skills}</td>
+            <td class="score">${resume.atsScore}%</td>
+            <td>
+                <button
+                    class="view-btn"
+                    onclick="viewResume(${resume.id})">
+                    View
+                </button>
+            </td>
+        `;
+
+        tbody.appendChild(row);
+    });
+
+    window.resumeData = data;
+
+});
+
+function viewResume(id){
+
+    let resume =
+    window.resumeData.find(r => r.id === id);
+
+    document.getElementById("resumeContent")
+    .textContent = resume.content;
+
+    document.getElementById("resumeModal")
+    .style.display = "block";
+}
+
+function closeModal(){
+
+    document.getElementById("resumeModal")
+    .style.display = "none";
+}
+
+</script>
+
+</body>
+
+</html>

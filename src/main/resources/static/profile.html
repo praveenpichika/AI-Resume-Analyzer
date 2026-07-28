@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+
+<title>User Profile</title>
+
+<link rel="stylesheet" href="profile.css">
+
+</head>
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🚀 AI Resume Analyzer
+    </div>
+
+    <div class="menu">
+
+        <a href="dashboard.html">Dashboard</a>
+
+        <a href="history.html">History</a>
+
+        <a href="profile.html">Profile</a>
+
+       <a href="#" onclick="logout()">Logout</a>
+
+    </div>
+
+</nav>
+
+<div class="profile-card">
+
+    <div class="avatar">
+        👤
+    </div>
+
+    <h1 id="name">Loading...</h1>
+
+    <p id="email"></p>
+
+    <div class="stats">
+
+        <div class="box">
+            <h2 id="totalResumes">0</h2>
+            <p>Total Resumes</p>
+        </div>
+
+        <div class="box">
+            <h2 id="averageScore">0%</h2>
+            <p>Average ATS</p>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="profile.js"></script>
+<script>
+
+async function logout(){
+
+    await fetch(`${window.location.hostname.includes("vercel.app") ? "/api" : ""}/logout`);
+
+    window.location.href="login.html";
+}
+
+</script>
+</body>
+</html>
+

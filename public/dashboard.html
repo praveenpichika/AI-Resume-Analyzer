@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Resume Analyzer Dashboard</title>
+
+<link rel="stylesheet" href="dashboard.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🚀 AI Resume Analyzer
+    </div>
+
+    <div class="menu">
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="profile.html">Profile</a>
+        <a href="history.html">History</a>
+        <a href="index.html">Analyze Resume</a>
+
+        <a href="#" onclick="logout()">Logout</a>
+
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <!-- Welcome -->
+
+    <div class="hero">
+
+        <h1>Welcome 👋</h1>
+
+        <p>
+            Analyze resumes, improve ATS score and track your resume history.
+        </p>
+
+    </div>
+
+    <!-- Dashboard Statistics -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>📄 Total Resumes</h3>
+
+            <div class="big" id="totalResumes">
+
+                0
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h3>🎯 Average ATS</h3>
+
+            <div class="big" id="averageATS">
+
+                0%
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h3>🏆 Best ATS</h3>
+
+            <div class="big" id="bestATS">
+
+                0%
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h3>🛠 Total Skills</h3>
+
+            <div class="big" id="totalSkills">
+
+                0
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ATS Chart -->
+
+    <div class="chart-card">
+
+        <h2>🎯 ATS Score Overview</h2>
+
+        <div class="chart-container">
+
+            <canvas id="resumeChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <!-- Skills -->
+
+    <div class="skills-section">
+
+        <!-- Detected -->
+
+        <div class="skill-card">
+
+            <h2>🛠 Detected Skills</h2>
+
+            <div
+                id="detectedSkills"
+                class="skill-container">
+
+            </div>
+
+        </div>
+
+        <!-- Missing -->
+
+        <div class="skill-card">
+
+            <h2>❌ Missing Skills</h2>
+
+            <div
+                id="missingSkills"
+                class="skill-container">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- AI Suggestions -->
+
+    <div class="history-card">
+
+        <h2>💡 AI Suggestions</h2>
+
+        <div
+            id="aiSuggestions"
+            class="suggestion-container">
+
+        </div>
+
+    </div>
+
+    <!-- Resume History -->
+
+    <div class="history-card">
+
+        <h2>📄 Resume History</h2>
+
+        <table id="historyTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Skills</th>
+                    <th>ATS Score</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- Buttons -->
+
+    <div class="buttons">
+
+        <a
+            href="index.html"
+            class="btn">
+
+            Analyze Resume
+
+        </a>
+
+        <a
+            href="history.html"
+            class="btn">
+
+            View History
+
+        </a>
+
+        <a
+            href="/download-pdf"
+            class="btn">
+
+            Download PDF Report
+
+        </a>
+
+    </div>
+
+</div>
+
+<script src="dashboard.js"></script>
+
+<script>
+
+async function logout(){
+
+    await fetch(`${window.location.hostname.includes("vercel.app") ? "/api" : ""}/logout`);
+
+    alert("Logged Out Successfully");
+
+    window.location.href="login.html";
+
+}
+
+async function checkLogin(){
+
+    const response = await fetch(`${window.location.hostname.includes("vercel.app") ? "/api" : ""}/check-session`);
+
+    const loggedIn = await response.json();
+
+    if(!loggedIn){
+
+        window.location.href="login.html";
+
+    }
+
+}
+
+checkLogin();
+
+</script>
+
+</body>
+
+</html>
