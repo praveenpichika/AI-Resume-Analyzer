@@ -1,5 +1,7 @@
 # 🚀 AI Resume Analyzer
 
+**🌟 Live Demo:** [https://ai-resume-analyzer-2-y5pq.onrender.com/](https://ai-resume-analyzer-2-y5pq.onrender.com/)
+
 AI Resume Analyzer is a full-stack web application built with **Spring Boot**, **Java**, **H2 Database**, **HTML**, **CSS**, and **JavaScript**. It helps users analyze their resumes against a job description and provides an ATS-style report with AI-generated suggestions.
 
 ---
