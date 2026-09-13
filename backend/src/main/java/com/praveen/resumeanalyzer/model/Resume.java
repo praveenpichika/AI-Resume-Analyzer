@@ -21,7 +21,7 @@ private int atsScore;
 
 private LocalDateTime uploadedAt;
 
-@Column(length = 5000)
+@Column(length = 50000)
 private String content;
 
 public Resume() {

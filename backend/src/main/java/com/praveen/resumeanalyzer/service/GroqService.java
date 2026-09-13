@@ -27,25 +27,18 @@ public class GroqService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setBearerAuth(apiKey);
 
-            String safePrompt = prompt
-                    .replace("\\", "\\\\")
-                    .replace("\"", "\\\"")
-                    .replace("\r", "\\r")
-                    .replace("\n", "\\n")
-                    .replace("\t", "\\t");
+            java.util.Map<String, Object> requestMap = java.util.Map.of(
+                "model", "llama3-8b-8192",
+                "messages", java.util.List.of(
+                    java.util.Map.of(
+                        "role", "user",
+                        "content", prompt
+                    )
+                ),
+                "temperature", 0.4
+            );
 
-            String requestBody = """
-            {
-              "model":"openai/gpt-oss-20b",
-              "messages":[
-                {
-                  "role":"user",
-                  "content":"%s"
-                }
-              ],
-              "temperature":0.4
-            }
-            """.formatted(safePrompt);
+            String requestBody = mapper.writeValueAsString(requestMap);
 
             HttpEntity<String> entity =
                     new HttpEntity<>(requestBody, headers);

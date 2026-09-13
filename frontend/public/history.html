@@ -219,7 +219,7 @@ pre{
 
 <script>
 
-fetch(`${window.location.hostname.includes('vercel.app') ? '/api' : ''}/resumes`)
+fetch(`${window.location.hostname.includes("vercel.app") ? "/api" : ""}/resumes`)
 .then(response => response.json())
 .then(data => {
 

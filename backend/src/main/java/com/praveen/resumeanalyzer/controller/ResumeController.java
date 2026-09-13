@@ -48,7 +48,7 @@ public class ResumeController {
 }
 
     @PostMapping("/resume/upload")
-public ResumeResponse uploadResume(
+public ResponseEntity<ResumeResponse> uploadResume(
         @RequestParam("file") MultipartFile file,
         @RequestParam(value="jobDescription", required=false) String jobDescription,
         HttpSession session) {
@@ -63,7 +63,7 @@ public ResumeResponse uploadResume(
 
                 response.setMessage("Please login first.");
 
-                return response;
+                return ResponseEntity.status(401).body(response);
             }
 
             User user = userRepository.findById(userId).orElse(null);
@@ -72,7 +72,7 @@ public ResumeResponse uploadResume(
 
                 response.setMessage("User not found.");
 
-                return response;
+                return ResponseEntity.status(401).body(response);
             }
 
             String content;
@@ -141,7 +141,7 @@ response.setSuggestions(aiSuggestions);
 response.setSummary(summary);
 response.setMessage("Success");
 
-            return response;
+            return ResponseEntity.ok(response);
 
         } catch (Exception e) {
 
@@ -149,7 +149,7 @@ response.setMessage("Success");
 
             response.setMessage("Error : " + e.getMessage());
 
-            return response;
+            return ResponseEntity.status(500).body(response);
         }
     }
 
